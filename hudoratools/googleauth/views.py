@@ -56,7 +56,7 @@ def callback(request):
     # daraus jetzt noch flott ein access token
     request_token = openid.get_oauth_request_token(request)
     if request_token:
-        attributes['access_token']=None
+        attributes['access_token'] = None
         raise Exception('access token handling not yet implemented!')
 
     # schliesslich melden wir den Benutzer mit seinen Attributen am

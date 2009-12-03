@@ -19,7 +19,7 @@ class GoogleAuthBackend:
 
         # zuerst holen wir uns den passenden Benutzer aus der Datenbank bzw. 
         # legen einen neuen Benutzer an. 
-        user, created = User.objects.get_or_create(username=username)
+        user, created = User.objects.get_or_create(username=username, is_staff=True)
         if created:
             # fuer einen neuen Benutzer erzeugen wir hier ein Zufallspasswort,
             # sodass er sich nicht mehr anders als ueber Google Apps einloggen kann
