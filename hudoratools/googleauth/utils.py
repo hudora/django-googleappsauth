@@ -11,11 +11,11 @@ _consumer_secret = getattr(settings, 'GOOGLE_APPS_CONSUMER_SECRET', None)
 
 
 """ Google OAuth URLs, auf die zugegriffen werden soll """
-SERVER            =   'www.google.com'
-REQUEST_TOKEN_URL =   'https://%s/accounts/OAuthGetRequestToken' % SERVER
-AUTHORIZATION_URL =   'https://%s/accounts/OAuthAuthorizeToken' % SERVER
-ACCESS_TOKEN_URL =    'https://%s/accounts/OAuthGetAccessToken' % SERVER
-PROFILES_URL =        'http://%s/m8/feeds/profiles/domain/%s/full/' % (SERVER,_apps_domain)
+SERVER = 'www.google.com'
+REQUEST_TOKEN_URL = 'https://%s/accounts/OAuthGetRequestToken' % SERVER
+AUTHORIZATION_URL = 'https://%s/accounts/OAuthAuthorizeToken' % SERVER
+ACCESS_TOKEN_URL = 'https://%s/accounts/OAuthGetAccessToken' % SERVER
+PROFILES_URL = 'http://%s/m8/feeds/profiles/domain/%s/full/' % (SERVER, _apps_domain)
 
 
 """ die globalen Objekte zum Zugriff auf Google OAuth """
@@ -54,7 +54,7 @@ def token_from_string(serialized_token):
     return token
 
 
-def get_request_token(callback_url,google_scope):
+def get_request_token(callback_url, google_scope):
     """
     OAuth call, laedt ein neuen Request-Token vom Server 
     """
@@ -68,8 +68,7 @@ def get_request_token(callback_url,google_scope):
     return req_token
 
 
-
-def get_access_token(req_token,verifier=None):
+def get_access_token(req_token, verifier=None):
     """
     OAuth call, laedt nach erfolgtem Auth des Users und 
     der App das eigentliche Access-Token von Google. Mit diesem
@@ -101,15 +100,13 @@ def build_auth_url(req_token):
 
     req = oauth.OAuthRequest.from_consumer_and_token(_consumer, token=req_token,
         http_url=AUTHORIZATION_URL,
-        parameters={'hd':'hudora.de'})
+        parameters={'hd': 'hudora.de'})
     req.sign_request(_signature_method, _consumer, req_token)
     auth_url = req.to_url()
     return auth_url
 
 
-
-
-def get_user_profile(access_token,username):
+def get_user_profile(access_token, username):
     req = oauth.OAuthRequest.from_consumer_and_token(_consumer, token=access_token,
         http_method='GET',
         http_url=PROFILES_URL + username,
@@ -125,10 +122,3 @@ def get_user_profile(access_token,username):
 # user's login identifier, as openid.claimed_id
 # requested user attributes, as openid.ax.value.email (if requested)
 # authorized OAuth request token, as openid.ext2.request_token (if requested)
-
-
-
-
-
-
-

@@ -3,10 +3,10 @@ import urllib
 
 
 class OpenIdError(Exception):
+
     def __init__(self, why=None):
         Exception.__init__(self, why)
         self.why = why
-
 
 
 def build_login_url(endpoint_url, realm, callback_url, oauth_consumer=None, oauth_scope=None):
@@ -105,12 +105,11 @@ def _get_request_args(request):
     return args
 
 
-def _lookup_key(args,key_pattern):
+def _lookup_key(args, key_pattern):
     for key, value in args.items():
-        if key == key_pattern or re.search(key_pattern,key):
-            if isinstance(value,list):
+        if key == key_pattern or re.search(key_pattern, key):
+            if isinstance(value, list):
                 return value[0]
             else:
                 return value
     return None
-

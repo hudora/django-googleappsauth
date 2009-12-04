@@ -17,39 +17,40 @@ HTTP_METHOD = 'GET'
 SIGNATURE_METHOD = 'PLAINTEXT'
 
 
-# Generic exception class
 class OAuthError(RuntimeError):
+    """Generic exception class."""
 
     def __init__(self, message='OAuth error occured.'):
         self.message = message
 
 
-# optional WWW-Authenticate header (401 error)
 def build_authenticate_header(realm=''):
+    """optional WWW-Authenticate header (401 error)."""
     return {'WWW-Authenticate': 'OAuth realm="%s"' % realm}
 
 
-# url escape
 def escape(s):
+    """url escape."""
     # escape '/' too
     return urllib.quote(s, safe='~')
 
 
-# util function: current timestamp
-# seconds since epoch (UTC)
 def generate_timestamp():
+    """util function: current timestamp
+
+    seconds since epoch (UTC)"""
     return int(time.time())
 
 
-# util function: nonce
-# pseudorandom number
 def generate_nonce(length=8):
+    """util function: nonce
+    pseudorandom number"""
     return ''.join([str(random.randint(0, 9)) for i in range(length)])
 
 
-# OAuthConsumer is a data type that represents the identity of the Consumer
-# via its shared secret with the Service Provider.
 class OAuthConsumer(object):
+    """ OAuthConsumer is a data type that represents the identity of the Consumer
+    via its shared secret with the Service Provider."""
     key = None
     secret = None
 
@@ -57,9 +58,10 @@ class OAuthConsumer(object):
         self.key = key
         self.secret = secret
 
-# OAuthToken is a data type that represents an End User via either an access
-# or request token.     
+
 class OAuthToken(object):
+    """ OAuthToken is a data type that represents an End User via either an access
+    or request token."""
     # access tokens and request tokens
     key = None
     secret = None
@@ -68,6 +70,7 @@ class OAuthToken(object):
     key = the token
     secret = the token secret
     '''
+
     def __init__(self, key, secret):
         self.key = key
         self.secret = secret
@@ -87,9 +90,10 @@ class OAuthToken(object):
     def __str__(self):
         return self.to_string()
 
-# OAuthRequest represents the request and can be serialized
+
 class OAuthRequest(object):
     '''
+    OAuthRequest represents the request and can be serialized
     OAuth parameters:
         - oauth_consumer_key 
         - oauth_token
@@ -274,8 +278,9 @@ class OAuthRequest(object):
         return parameters
     _split_url_string = staticmethod(_split_url_string)
 
-# OAuthServer is a worker to check a requests validity against a data store
+
 class OAuthServer(object):
+    """OAuthServer is a worker to check a requests validity against a data store"""
     timestamp_threshold = 300 # in seconds, five minutes
     version = VERSION
     signature_methods = None
@@ -417,8 +422,8 @@ class OAuthServer(object):
             raise OAuthError('Nonce already used: %s' % str(nonce))
 
 
-# OAuthClient is a worker to attempt to execute a request
 class OAuthClient(object):
+    """OAuthClient is a worker to attempt to execute a request."""
     consumer = None
     token = None
 
@@ -445,8 +450,8 @@ class OAuthClient(object):
         raise NotImplementedError
 
 
-# OAuthDataStore is a database abstraction used to lookup consumers and tokens
 class OAuthDataStore(object):
+    """OAuthDataStore is a database abstraction used to lookup consumers and tokens"""
 
     def lookup_consumer(self, key):
         # -> OAuthConsumer
@@ -473,8 +478,8 @@ class OAuthDataStore(object):
         raise NotImplementedError
 
 
-# OAuthSignatureMethod is a strategy class that implements a signature method
 class OAuthSignatureMethod(object):
+    """OAuthSignatureMethod is a strategy class that implements a signature method"""
 
     def get_name(self):
         # -> str

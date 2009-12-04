@@ -49,8 +49,7 @@ def callback(request):
         'email': openid.get_email(request),
         'language': openid.get_language(request),
         'firstname': openid.get_firstname(request),
-        'lastname': openid.get_lastname(request)
-    }
+        'lastname': openid.get_lastname(request)}
 
     # wenn wir ein OAuth request token bekommen haben machen wir
     # daraus jetzt noch flott ein access token
@@ -70,4 +69,3 @@ def callback(request):
 def logout(request):
     djauth.logout(request)
     return HttpResponseRedirect('/posts')
-

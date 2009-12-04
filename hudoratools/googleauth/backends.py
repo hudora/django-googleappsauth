@@ -6,6 +6,7 @@ import re
 
 
 class GoogleAuthBackend:
+
     def authenticate(self, identifier=None, attributes=None):
         # da wir von Google keinen Benutzernamen bekommen versuchen wir zuerst, 
         # den ersten Teil der Emailadresse zu nehmen. Wenn wir keine Email haben 
@@ -13,7 +14,7 @@ class GoogleAuthBackend:
         email = attributes.get('email')
         username = identifier
         if email:
-            parts=re.findall(r'([a-zA-Z0-9._%+-]+)@',email)
+            parts=re.findall(r'([a-zA-Z0-9._%+-]+)@', email)
             if len(parts) == 1:
                 username = parts[0]
 
@@ -39,7 +40,7 @@ class GoogleAuthBackend:
         try:
             profile = self._get_or_create_user_profile(user)
             profile.language = attributes.get('language')
-            profile.access_token = attributes.get('access_token','')
+            profile.access_token = attributes.get('access_token', '')
             profile.save()
         except SiteProfileNotAvailable:
             pass
@@ -47,13 +48,11 @@ class GoogleAuthBackend:
         # das war's, Benutzer zurueckliefern, damit ist Login geglueckt
         return user
 
-
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-
 
     def _get_or_create_user_profile(self, user):
         profile_module = getattr(settings, 'AUTH_PROFILE_MODULE', False)
