@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+googleauth/tools.py - 
+
+Created by Axel Schlüter on 2009-12
+Copyright (c) 2009 HUDORA GmbH. All rights reserved.
+"""
+
 import re
 import urllib
 

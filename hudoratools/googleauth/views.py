@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+googleauth/views.py - 
+
+Created by Axel Schlüter on 2009-12
+Copyright (c) 2009 HUDORA GmbH. All rights reserved.
+"""
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth import REDIRECT_FIELD_NAME

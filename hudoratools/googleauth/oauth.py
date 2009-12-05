@@ -1,8 +1,15 @@
-# code is part of django-twitter-oauth and was taken from 
-# <http://github.com/henriklied/django-twitter-oauth>. It 
-# was by Henrik Lied and is based on a snippet based on 
-# Simon Willison's Fire Eagle views found at 
-# <http://www.djangosnippets.org/snippets/655/>
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+googleauth/oauth.py - 
+
+Created by Axel Schlüter on 2009-12
+
+code is part of django-twitter-oauth and was taken from http://github.com/henriklied/django-twitter-oauth#.
+It  was by Henrik Lied and is based on a snippet based on  Simon Willison's Fire Eagle views found at 
+http://www.djangosnippets.org/snippets/655/
+"""
+
 
 import cgi
 import urllib
@@ -12,7 +19,7 @@ import urlparse
 import hmac
 import binascii
 
-VERSION = '1.0' # Hi Blaine!
+VERSION = '1.0'
 HTTP_METHOD = 'GET'
 SIGNATURE_METHOD = 'PLAINTEXT'
 

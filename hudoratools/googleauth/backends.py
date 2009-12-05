@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+googleauth/backends.py - Django authentication backend connecting to Google Apps
+
+Created by Axel Schlüter on 2009-12
+Copyright (c) 2009 HUDORA GmbH. All rights reserved.
+"""
+
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User, SiteProfileNotAvailable
