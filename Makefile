@@ -9,8 +9,9 @@ check:
 install: build
 	sudo python setup.py install
 
-test:
+test: dependencies
 	DJANGO_SETTINGS_MODULE=settings PYTHONPATH=. python hudoratools/templatetags/hudoratools.py
+	DJANGO_SETTINGS_MODULE=settings PYTHONPATH=. python hudoratools/forms.py
 
 dependencies:
 	virtualenv testenv
