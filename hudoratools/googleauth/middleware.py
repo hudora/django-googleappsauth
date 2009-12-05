@@ -7,9 +7,10 @@ Created by Axel Schlüter on 2009-12
 Copyright (c) 2009 HUDORA GmbH. All rights reserved.
 """
 
+from django.conf import settings
 from django.contrib.auth.models import User, SiteProfileNotAvailable
 from django.core.exceptions import ImproperlyConfigured
-from django.conf import settings
+from django.core.urlresolvers import reverse
 import django.contrib.auth as djauth
 import views
 
@@ -28,6 +29,10 @@ class GoogleAuthMiddleware(object):
         areas = getattr(settings, 'AUTH_PROTECTED_AREAS', '').split('+')
         matches = filter(lambda area: path.startswith(area), areas)
         if len(matches) == 0:
+            return
+        
+        callback_url = request.build_absolute_uri(reverse(views.callback))
+        if path == callback_url:
             return
         
         # ok, die Seite muss auth'd werden. Haben wir vielleicht

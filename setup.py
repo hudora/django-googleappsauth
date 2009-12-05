@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(name='hudoratools',
       maintainer='Maximillian Dornseif',
       maintainer_email='md@hudora.de',
-      version='0.26',
+      version='0.26p1',
       url='https://cybernetics.hudora.biz/nonpublic/eggs/',
       description='hudoratools',
       long_description="Django support tools for internal use at HUDORA.",
