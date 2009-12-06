@@ -17,33 +17,38 @@ import re
 
 
 class GoogleAuthBackend:
-
     def authenticate(self, identifier=None, attributes=None):
         # da wir von Google keinen Benutzernamen bekommen versuchen wir zuerst, 
         # den ersten Teil der Emailadresse zu nehmen. Wenn wir keine Email haben 
         # dann bleibt nur der OpenID-Identifier als Benutzername
         email = attributes.get('email', '')
         username = attributes.get('email', identifier).split('@')[0].replace('.', '')
-        
-        # zuerst holen wir uns den passenden Benutzer aus der Datenbank bzw. 
-        # legen einen neuen Benutzer an. 
-        user, created = User.objects.get_or_create(email=email)
-        if created:
+        users = User.objects.filter(email=email)
+        if len(users) > 1:
+            raise RuntimeError("duplicate user %s" % email)
+        elif len(users) < 1:
+            # for some reason it seems this code branch is never executed ?!?
+            user = User.objects.create(email=email, username=username)
             # fuer einen neuen Benutzer erzeugen wir hier ein Zufallspasswort,
             # sodass er sich nicht mehr anders als ueber Google Apps einloggen kann
             passwd = User.objects.make_random_password()
-            user.username = username
             user.set_password(passwd)
             # note creation in log
             LogEntry.objects.log_action(1, ContentType.objects.get_for_model(User).id,
                                     user.id, unicode(User),
                                     ADDITION, "durch googleauth automatisch erzeugt")
-            
+        else:
+            user = users[0]
         # jetzt aktualisieren wir die Attribute des Benutzers mit den neuesten 
         # Werten von Google, falls sich da was geaendert haben sollte
         user.first_name = attributes.get('firstname')
         user.last_name = attributes.get('lastname')
+        user.username = username
         user.is_staff = True
+        if not user.password:
+            passwd = User.objects.make_random_password()
+            user.set_password(passwd)
+            
         user.save()
         
         # schliesslich speichern wir das Access Token des Benutzers in seinem
