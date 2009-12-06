@@ -51,25 +51,34 @@ def callback(request):
     callback_url = request.session['callback_url']
     identifier=openid.parse_login_response(request, callback_url)
     if not identifier:
-        return HttpResponseRedirect('/posts')
-
+        # TODO: was ist hier los?
+        return HttpResponseRedirect('/')
+    
     # jetzt holen wir uns die restlichen Daten aus dem Login
     attributes = {
         'email': openid.get_email(request),
         'language': openid.get_language(request),
         'firstname': openid.get_firstname(request),
         'lastname': openid.get_lastname(request)}
-
+    
     # wenn wir ein OAuth request token bekommen haben machen wir
     # daraus jetzt noch flott ein access token
     request_token = openid.get_oauth_request_token(request)
     if request_token:
         attributes['access_token'] = None
         raise Exception('access token handling not yet implemented!')
-
+    
+    username = attributes.get('email', identifier).split('@')[0].replace('.', '')
+    
     # schliesslich melden wir den Benutzer mit seinen Attributen am
     # Auth-System von Django an, dann zurueck zur eigentlichen App
-    user = djauth.authenticate(identifier=identifier, attributes=attributes)
+    user = djauth.authenticate(identifier=username, attributes=attributes)
+    if not user:
+        # For some reason i do not fully understand we get back a "None"" coasionalty - retry.
+        user = djauth.authenticate(identifier=username, attributes=attributes)
+        if not user:
+            # die Authentifizierung ist gescheitert
+            raise RuntimeError("Authentifizierungsproblem: %s|%s|%s" % (username, identifier, attributes))
     djauth.login(request, user)
     redirect_url = request.session['redirect_url']
     return HttpResponseRedirect(redirect_url)

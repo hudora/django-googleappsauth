@@ -32,7 +32,7 @@ class GoogleAuthMiddleware(object):
             return
         
         callback_url = request.build_absolute_uri(reverse(views.callback))
-        if path == callback_url:
+        if callback_url.endswith(path):
             return
         
         # ok, die Seite muss auth'd werden. Haben wir vielleicht
