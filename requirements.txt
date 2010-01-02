@@ -1,4 +1,2 @@
-Django==1.0.2-final
--f https://cybernetics.hudora.biz/nonpublic/eggs/
-cs
-huTools>=0.39p3
+setuptools
+Django>-1.0.2-final

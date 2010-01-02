@@ -1,18 +1,14 @@
-from ez_setup import use_setuptools
-use_setuptools()
-from setuptools import setup, find_packages
+import codecs
 
-setup(name='hudoratools',
+setup(name='googleappsauth',
       maintainer='Maximillian Dornseif',
       maintainer_email='md@hudora.de',
-      version='0.26p3',
-      url='https://cybernetics.hudora.biz/nonpublic/eggs/',
-      description='hudoratools',
-      long_description="Django support tools for internal use at HUDORA.",
+      version='1.0',
+      description='googleappsauth authenticates Django Users against a Google Apps Domain',
+      long_description=codecs.open('README.markdown', "r", "utf-8").read()
       license='BSD',
-      #classifiers=['Intended Audience :: Developers',
-      #             'Programming Language :: Python'],
-      
+      classifiers=['Intended Audience :: Developers',
+                   'Programming Language :: Python'],
       packages = find_packages(),
       package_data = {
           # If any package contains *.txt or *.rst files, include them:

@@ -1,6 +1,2 @@
-0.26p1 - bugs in forms.py fixed
+1.0  - stand alone package
 0.26 - comes with the googleauth suite
-0.25 - added artnr2name filter
-0.24 - Added forms.py, a generic approach for hudora specific address validation
-0.23 - Added sites.py, a framework for internal and public URLs
-
