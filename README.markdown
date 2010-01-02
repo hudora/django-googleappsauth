@@ -46,3 +46,10 @@ Using a special middleware which is included int he package, you can block acces
 In addition you can set `AUTH_PROTECTED_AREAS` to authenticate only access to certain parts of a site, e.g.
 
     AUTH_PROTECTED_AREAS = '/admin'
+
+## Download
+
+Get it at the [Python Cheeseshop][3] or at [GitHub][4].
+
+[3]: http://pypi.python.org/pypi/googleappsauth/
+[4]: http://github.com/hudora/django-googleappsauth
