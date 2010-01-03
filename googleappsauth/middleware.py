@@ -12,13 +12,14 @@ from django.contrib.auth.models import User, SiteProfileNotAvailable
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 import django.contrib.auth as djauth
-import views
+import googleappsauth.views
 
 
 class GoogleAuthMiddleware(object):
     """Force Google Apps Authentication for the whole site.
     
-    Using settings.AUTH_PROTECTED_AREAS you can restrict authentication to only parts of a site.
+    Using settings.AUTH_PROTECTED_AREAS you can restrict authentication 
+    o only parts of a site.
     """
     
     def process_request(self, request):
@@ -31,6 +32,8 @@ class GoogleAuthMiddleware(object):
         if len(matches) == 0:
             return
         
+        # Dont force authentication for the callback URL since it would
+        # result in a loop
         callback_url = request.build_absolute_uri(reverse(views.callback))
         if callback_url.endswith(path):
             return
@@ -41,5 +44,6 @@ class GoogleAuthMiddleware(object):
             return
         
         # nein, wir haben noch keinen User. Also den Login ueber
-        # Google Apps OpenID/ OAuth starten
-        return views.login(request, redirect_url=path)
+        # Google Apps OpenID/OAuth starten
+        return googleappsauth.views.login(request,
+            redirect_url="%s?%s" % (path, request.META.get('QUERY_STRING', ''))
