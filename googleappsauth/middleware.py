@@ -46,4 +46,4 @@ class GoogleAuthMiddleware(object):
         # nein, wir haben noch keinen User. Also den Login ueber
         # Google Apps OpenID/OAuth starten
         return googleappsauth.views.login(request,
-            redirect_url="%s?%s" % (path, request.META.get('QUERY_STRING', ''))
+            redirect_url="%s?%s" % (path, request.META.get('QUERY_STRING', '')))
