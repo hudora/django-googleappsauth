@@ -28,7 +28,7 @@ class GoogleAuthMiddleware(object):
         path = request.META['PATH_INFO']
         # TODO: better use a list instead of a + concatinated string
         areas = getattr(settings, 'AUTH_PROTECTED_AREAS', '').split('+')
-        matches = filter(lambda area: path.startswith(area), areas)
+        matches = [area for area in areas if path.startswith(area)]
         if len(matches) == 0:
             return
         
