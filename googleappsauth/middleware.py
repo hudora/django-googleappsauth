@@ -34,7 +34,7 @@ class GoogleAuthMiddleware(object):
         
         # Dont force authentication for the callback URL since it would
         # result in a loop
-        callback_url = request.build_absolute_uri(reverse(views.callback))
+        callback_url = request.build_absolute_uri(reverse(googleappsauth.views.callback))
         if callback_url.endswith(path):
             return
         

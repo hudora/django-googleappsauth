@@ -53,3 +53,11 @@ Get it at the [Python Cheeseshop][3] or at [GitHub][4].
 
 [3]: http://pypi.python.org/pypi/googleappsauth/
 [4]: http://github.com/hudora/django-googleappsauth
+
+## See also
+
+ * Tim Garthwaite: [Google Apps Auth Backend for Django][5]
+ * http://github.com/flashingpumpkin/django-socialregistration/
+ * http://github.com/uswaretech/Django-Socialauth/
+
+[5]: http://techblog.appirio.com/2008/10/google-apps-auth-backend-for-django.html
