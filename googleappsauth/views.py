@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-googleauth/views.py - 
+googleappsauth/views.py - 
 
 Created by Axel Schlüter on 2009-12
-Copyright (c) 2009 HUDORA GmbH. All rights reserved.
+Copyright (c) 2009, 2010 HUDORA GmbH. All rights reserved.
 """
 
 from django.conf import settings
@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 import django.contrib.auth as djauth
-import openid
+import googleappsauth.openid
 
 
 _google_apps_domain = getattr(settings, 'GOOGLE_APPS_DOMAIN', None)
@@ -24,10 +24,10 @@ _google_api_scope = getattr(settings, 'GOOGLE_API_SCOPE', None)
 
 
 def login(request, redirect_field_name=REDIRECT_FIELD_NAME, redirect_url=None):
-    # zuerst bestimmen wir, wohin nach erfolgtem Login in die App 
+    # zuerst bestimmen wir, wohin nach erfolgtem Login in die App
     # umgeleitet werden soll
     if not redirect_url:
-        redirect_url = request.REQUEST.get(redirect_field_name, None)
+        redirect_url = request.REQUEST.get(redirect_field_name)
         if not redirect_url:
             redirect_url = settings.LOGIN_REDIRECT_URL
     request.session['redirect_url'] = redirect_url
@@ -39,7 +39,7 @@ def login(request, redirect_field_name=REDIRECT_FIELD_NAME, redirect_url=None):
 
     # und schliesslich konstruieren wir darauf die Google-OpenID-
     # Endpoint-URL, auf die wir dann den Benutzer umleiten
-    url = openid.build_login_url(
+    url = googleappsauth.openid.build_login_url(
             _google_openid_endpoint, _google_openid_realm,
             callback_url, _oauth_consumer_key, _google_api_scope)
     return HttpResponseRedirect(url)
@@ -49,41 +49,43 @@ def callback(request):
     # haben wir einen erfolgreichen Login? Wenn nicht gehen wir
     # sofort zurueck, ohne einen Benutzer einzuloggen
     callback_url = request.session['callback_url']
-    identifier=openid.parse_login_response(request, callback_url)
+    identifier = googleappsauth.openid.parse_login_response(request, callback_url)
     if not identifier:
         # TODO: was ist hier los?
         return HttpResponseRedirect('/')
     
     # jetzt holen wir uns die restlichen Daten aus dem Login
     attributes = {
-        'email': openid.get_email(request),
-        'language': openid.get_language(request),
-        'firstname': openid.get_firstname(request),
-        'lastname': openid.get_lastname(request)}
+        'email': googleappsauth.openid.get_email(request),
+        'language': googleappsauth.openid.get_language(request),
+        'firstname': googleappsauth.openid.get_firstname(request),
+        'lastname': googleappsauth.openid.get_lastname(request)}
     
     # wenn wir ein OAuth request token bekommen haben machen wir
     # daraus jetzt noch flott ein access token
-    request_token = openid.get_oauth_request_token(request)
+    request_token = googleappsauth.openid.get_oauth_request_token(request)
     if request_token:
         attributes['access_token'] = None
         raise Exception('access token handling not yet implemented!')
     
+    # Usernames are based on E-Mail Addresses which are unique.
     username = attributes.get('email', identifier).split('@')[0].replace('.', '')
     
     # schliesslich melden wir den Benutzer mit seinen Attributen am
     # Auth-System von Django an, dann zurueck zur eigentlichen App
     user = djauth.authenticate(identifier=username, attributes=attributes)
     if not user:
-        # For some reason i do not fully understand we get back a "None"" coasionalty - retry.
+        # For some reason I do not fully understand we get back a "None"" coasionalty - retry.
         user = djauth.authenticate(identifier=username, attributes=attributes)
         if not user:
             # die Authentifizierung ist gescheitert
             raise RuntimeError("Authentifizierungsproblem: %s|%s|%s" % (username, identifier, attributes))
     djauth.login(request, user)
     redirect_url = request.session['redirect_url']
+    # del request.session['redirect_url']
     return HttpResponseRedirect(redirect_url)
 
 
 def logout(request):
     djauth.logout(request)
-    return HttpResponseRedirect('/posts')
+    return HttpResponseRedirect('https://www.google.com/a/%s/Logout' % _google_apps_domain)

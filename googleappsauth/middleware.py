@@ -4,7 +4,7 @@
 googleauth/middleware.py - force Google Apps Authentication for the whole site.
 
 Created by Axel Schlüter on 2009-12
-Copyright (c) 2009 HUDORA GmbH. All rights reserved.
+Copyright (c) 2009, 2010 HUDORA GmbH. All rights reserved.
 """
 
 from django.conf import settings
@@ -44,6 +44,6 @@ class GoogleAuthMiddleware(object):
             return
         
         # nein, wir haben noch keinen User. Also den Login ueber
-        # Google Apps OpenID/OAuth starten
+        # Google Apps OpenID/OAuth starten und Parameter in Session speichern
         return googleappsauth.views.login(request,
             redirect_url="%s?%s" % (path, request.META.get('QUERY_STRING', '')))
