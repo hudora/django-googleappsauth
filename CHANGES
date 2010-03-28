@@ -1,3 +1,5 @@
+1.02 GOOGLE_OPENID_ENDPOINT and GOOGLE_API_SCOPE not required anymore,
+     ignoring of access_token
 1.01p4 - graceful handling of broken session engine
 1.01 - tranport QUERY_STRING through google Authentication, Logout at Google
 1.0  - stand alone package

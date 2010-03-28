@@ -29,7 +29,7 @@ def login(request, redirect_field_name=REDIRECT_FIELD_NAME, redirect_url=None):
     if not redirect_url:
         redirect_url = request.REQUEST.get(redirect_field_name)
         if not redirect_url:
-            redirect_url = settings.LOGIN_REDIRECT_URL
+            redirect_url = settings.get('LOGIN_REDIRECT_URL', '/')
     request.session['redirect_url'] = redirect_url
 
     # jetzt bauen wir uns die URL fuer den Callback zusammen, unter
@@ -48,7 +48,7 @@ def login(request, redirect_field_name=REDIRECT_FIELD_NAME, redirect_url=None):
 def callback(request):
     # haben wir einen erfolgreichen Login? Wenn nicht gehen wir
     # sofort zurueck, ohne einen Benutzer einzuloggen
-    callback_url = request.session['callback_url']
+    callback_url = request.session.get('callback_url', '/')
     identifier = googleappsauth.openid.parse_login_response(request, callback_url)
     if not identifier:
         # TODO: was ist hier los?
@@ -64,9 +64,9 @@ def callback(request):
     # wenn wir ein OAuth request token bekommen haben machen wir
     # daraus jetzt noch flott ein access token
     request_token = googleappsauth.openid.get_oauth_request_token(request)
-    if request_token:
-        attributes['access_token'] = None
-        raise Exception('access token handling not yet implemented!')
+    #if request_token:
+    #    attributes['access_token'] = None
+    #    raise Exception('access token handling not yet implemented!')
     
     # Usernames are based on E-Mail Addresses which are unique.
     username = attributes.get('email', identifier).split('@')[0].replace('.', '')

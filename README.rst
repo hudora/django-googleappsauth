@@ -16,16 +16,14 @@ To use googleappsauth, configuration in `settings.py` should look like this::
     GOOGLE_APPS_DOMAIN = 'example.com'
     GOOGLE_APPS_CONSUMER_KEY = 'example.com'
     GOOGLE_APPS_CONSUMER_SECRET = '*sekret*'
-    GOOGLE_OPENID_ENDPOINT = 'https://www.google.com/a/%s/o8/ud?be=o8' % GOOGLE_APPS_DOMAIN
-    GOOGLE_API_SCOPE = 'http://www.google.com/m8/feeds/+http://docs.google.com/feeds/+http://spreadsheets.google.com/feeds/'
     # domain where your application is running
     GOOGLE_OPENID_REALM = 'http://*.hudora.biz/'
 
-You also have to tell googleappsauth where various views life::
+You also can tell googleappsauth where to go after successfull authentication, in case
+the redirect_url had not been set. `LOGIN_REDIRECT_URL` defaults to `/`.
+::
 
-    LOGIN_URL = '/login'
     LOGIN_REDIRECT_URL = '/admin'
-    LOGOUT_URL = '/logout'
 
 To activate googleappsauth, set the appropriate Authentication backend and include a callback view.
 ::
