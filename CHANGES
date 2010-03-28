@@ -1,3 +1,4 @@
+1.01p4 - graceful handling of broken session engine
 1.01 - tranport QUERY_STRING through google Authentication, Logout at Google
 1.0  - stand alone package
 0.26 - comes with the googleauth suite
