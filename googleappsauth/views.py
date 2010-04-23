@@ -29,7 +29,7 @@ def login(request, redirect_field_name=REDIRECT_FIELD_NAME, redirect_url=None):
     if not redirect_url:
         redirect_url = request.REQUEST.get(redirect_field_name)
         if not redirect_url:
-            redirect_url = settings.get('LOGIN_REDIRECT_URL', '/')
+            redirect_url =  getattr(settings, 'LOGIN_REDIRECT_URL', '/')
     request.session['redirect_url'] = redirect_url
 
     # jetzt bauen wir uns die URL fuer den Callback zusammen, unter
