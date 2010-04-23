@@ -31,8 +31,7 @@ class GoogleAuthBackend:
             user = User.objects.create(email=email, username=username)
             # fuer einen neuen Benutzer erzeugen wir hier ein Zufallspasswort,
             # sodass er sich nicht mehr anders als ueber Google Apps einloggen kann
-            passwd = User.objects.make_random_password()
-            user.set_password(passwd)
+            user.set_unusable_password()
             # note creation in log
             LogEntry.objects.log_action(1, ContentType.objects.get_for_model(User).id,
                                     user.id, unicode(User),
@@ -46,8 +45,7 @@ class GoogleAuthBackend:
         user.username = username
         user.is_staff = True
         if not user.password:
-            passwd = User.objects.make_random_password()
-            user.set_password(passwd)
+            user.set_unusable_password()
             
         user.save()
         
