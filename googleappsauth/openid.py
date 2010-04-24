@@ -21,7 +21,7 @@ class OpenIdError(Exception):
 def build_login_url(endpoint_url, realm, callback_url, oauth_consumer=None, oauth_scope=None):
     # zuerst ueberpruefen wir, ob die Callback Url gueltig ist
     if not endpoint_url:
-        raise OpenIdError('invalid GOOGLE_OPENID_ENDPOINt %r' % endpoint)
+        raise OpenIdError('invalid GOOGLE_OPENID_ENDPOINT %r' % endpoint_url)
     if not realm:
         raise OpenIdError('invalid GOOGLE_OPENID_REALM %r' % realm)
     if not callback_url:
