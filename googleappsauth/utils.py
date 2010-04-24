@@ -109,7 +109,7 @@ def build_auth_url(req_token):
 
     req = oauth.OAuthRequest.from_consumer_and_token(_consumer, token=req_token,
         http_url=AUTHORIZATION_URL,
-        parameters={'hd': 'hudora.de'})
+        parameters={'hd': _apps_domain})
     req.sign_request(_signature_method, _consumer, req_token)
     auth_url = req.to_url()
     return auth_url

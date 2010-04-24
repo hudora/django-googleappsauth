@@ -36,7 +36,7 @@ MIDDLEWARE_CLASSES = (
     'hudoratools.googleauth.middleware.GoogleAuthMiddleware',
 )
 
-In addition you can set AUTH_PROTECTED_AREAS to authenticate only access to certain parts of a cite, e.g.
+In addition you can set AUTH_PROTECTED_AREAS to authenticate only access to certain parts of a site, e.g.
 
-AUTH_PROTECTED_AREAS = '/admin'
+AUTH_PROTECTED_AREAS = ['/admin']
 """

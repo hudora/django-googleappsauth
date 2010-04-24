@@ -26,8 +26,10 @@ class GoogleAuthMiddleware(object):
         # zuerst ueberpruefen wir, ob wir fuer die aktuelle URL 
         # ueberhaupt einen gueltigen User einloggen muessen
         path = request.META['PATH_INFO']
-        # TODO: better use a list instead of a + concatinated string
-        areas = getattr(settings, 'AUTH_PROTECTED_AREAS', '').split('+')
+        areas = getattr(settings, 'AUTH_PROTECTED_AREAS', [])
+        # LEGACY: AUTH_PROTECTED_AREAS = "foo+bar" - to removed in Version 2.9
+        if hasattr(areas, 'split'):
+            areas = areas.split('+')
         matches = [area for area in areas if path.startswith(area)]
         if len(matches) == 0:
             return

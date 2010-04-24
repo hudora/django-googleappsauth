@@ -1,3 +1,4 @@
+1.03 AUTH_PROTECTED_AREAS now is a list (legavy support in place until Version 2.0)
 1.02 GOOGLE_OPENID_ENDPOINT and GOOGLE_API_SCOPE not required anymore,
      ignoring of access_token
 1.01p4 - graceful handling of broken session engine
