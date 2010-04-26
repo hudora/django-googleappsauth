@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 setup(name='googleappsauth',
       maintainer='Maximillian Dornseif',
       maintainer_email='md@hudora.de',
-      version='1.02',
+      version='1.03',
       description='googleappsauth authenticates Django Users against a Google Apps Domain',
       long_description=codecs.open('README.rst', "r", "utf-8").read(),
       license='BSD',
