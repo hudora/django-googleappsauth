@@ -63,3 +63,13 @@ See also
  * http://github.com/flashingpumpkin/django-socialregistration/
  * http://github.com/uswaretech/Django-Socialauth/
 
+Notes
+-----
+
+You might need to enable the OAuth+OpenID support in your Google Apps domain
+at http://www.google.com/a/cpanel/<your-domain>/SetupIdp
+
+You might need to register at http://code.google.com/apis/accounts/docs/RegistrationForWebAppsAuto.html
+Might look like this: http://static.23.nu/md/Pictures/ZZ6F76B85B.png
+
+Ig google claims "invalid page" check GOOGLE_OPENID_REALM.
