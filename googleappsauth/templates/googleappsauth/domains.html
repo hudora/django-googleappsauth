@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+  <head> 
+    <title>Bitte Google-Login-Domain auswaehlen!</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <style type="text/css" media="screen">
+      body { 
+        font-family: helvetica, arial, sans-serif; 
+        font-size: 10pt;
+      }
+      h1 { 
+        font-size: 12pt;
+        font-weight: normal;
+        line-height: 1.5em;
+      }
+      div#domains {
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+      }
+      select { 
+        margin-bottom: 15px;
+        font-size: 10pt;
+      }
+      input[type='submit'] {
+        font-size: 10pt;
+      }
+    </style>
+  </head> 
+  <body> 
+    <div id="domains">
+      <h1>Bitte w&auml;hlen Sie die Domain aus, <br/> &uuml;ber die Sie sich einloggen m&ouml;chten:</h1>
+      <form action="{{login_url}}" method="post">
+        <select name="domain" id="id_domain">
+          {% for domain in domains %}
+            <option value="{{domain}}">{{domain}}</option>
+          {% endfor %}
+        </select>
+        <br/>
+        <input type="submit" value="Login auf dieser Domain durchfuehren"/>
+      </form>
+    </div>
+  </body>
+</html>
