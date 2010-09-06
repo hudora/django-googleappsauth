@@ -62,6 +62,10 @@ See also
  * Tim Garthwaite: `Google Apps Auth Backend for Django <http://techblog.appirio.com/2008/10/google-apps-auth-backend-for-django.html>`_
  * http://github.com/flashingpumpkin/django-socialregistration/
  * http://github.com/uswaretech/Django-Socialauth/
+ * http://bitbucket.org/benoitc/django-authopenid/
+ * http://djangosnippets.org/snippets/913/
+ * http://pkropf.blogspot.com/2009/05/django-google-apps-authentication.html
+ * http://github.com/adieu/python-openid/ - patched for Google Apps
 
 Notes
 -----
@@ -72,4 +76,4 @@ at http://www.google.com/a/cpanel/<your-domain>/SetupIdp
 You might need to register at http://code.google.com/apis/accounts/docs/RegistrationForWebAppsAuto.html
 Might look like this: http://static.23.nu/md/Pictures/ZZ6F76B85B.png
 
-Ig google claims "invalid page" check GOOGLE_OPENID_REALM.
+If google claims "invalid page" check GOOGLE_OPENID_REALM.
