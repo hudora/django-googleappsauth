@@ -19,6 +19,11 @@ To use googleappsauth, configuration in `settings.py` should look like this::
     # domain where your application is running
     GOOGLE_OPENID_REALM = 'http://*.hudora.biz/'
 
+If you want to choose from a list of Google apps domains on a login-by-login basis
+you can configure an array of apps domains::
+
+    GOOGLE_APPS_DOMAIN = ['example.com', 'foobar.com', 'carcdr.de']
+
 You also can tell googleappsauth where to go after successfull authentication, in case
 the redirect_url had not been set. `LOGIN_REDIRECT_URL` defaults to `/`.
 ::

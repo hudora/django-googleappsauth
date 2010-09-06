@@ -23,7 +23,7 @@ class GoogleAuthBackend:
         # dann bleibt nur der OpenID-Identifier als Benutzername
         email = attributes.get('email', '')
         username = attributes.get('email', identifier).split('@')[0].replace('.', '')
-        users = User.objects.filter(email=email)
+        users = User.objects.filter(username=username)
         if len(users) > 1:
             raise RuntimeError("duplicate user %s" % email)
         elif len(users) < 1:

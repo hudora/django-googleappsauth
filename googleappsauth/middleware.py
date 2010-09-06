@@ -25,7 +25,7 @@ class GoogleAuthMiddleware(object):
     def process_request(self, request):
         # zuerst ueberpruefen wir, ob wir fuer die aktuelle URL 
         # ueberhaupt einen gueltigen User einloggen muessen
-        path = request.META['PATH_INFO']
+        path = request.get_full_path()
         areas = getattr(settings, 'AUTH_PROTECTED_AREAS', [])
         # LEGACY: AUTH_PROTECTED_AREAS = "foo+bar" - to removed in Version 2.9
         if hasattr(areas, 'split'):
@@ -37,9 +37,10 @@ class GoogleAuthMiddleware(object):
         # Dont force authentication for the callback URL since it would
         # result in a loop
         callback_url = request.build_absolute_uri(reverse(googleappsauth.views.callback))
-        if callback_url.endswith(path):
+        callback_path = reverse(googleappsauth.views.callback)
+        if path.startswith(callback_path):
             return
-        
+
         # ok, die Seite muss auth'd werden. Haben wir vielleicht
         # schon einen geauth'd User in der aktuellen Session? 
         if request.user.is_authenticated():
