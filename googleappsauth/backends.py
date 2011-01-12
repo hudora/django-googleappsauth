@@ -10,13 +10,14 @@ Copyright (c) 2009 HUDORA GmbH. All rights reserved.
 from datetime import datetime
 from django.conf import settings
 from django.contrib.admin.models import LogEntry, ADDITION
+from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User, SiteProfileNotAvailable
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 import re
 
 
-class GoogleAuthBackend:
+class GoogleAuthBackend(ModelBackend):
     def authenticate(self, identifier=None, attributes=None):
         # da wir von Google keinen Benutzernamen bekommen versuchen wir zuerst, 
         # den ersten Teil der Emailadresse zu nehmen. Wenn wir keine Email haben 
