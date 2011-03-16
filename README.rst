@@ -54,6 +54,11 @@ In addition you can set `AUTH_PROTECTED_AREAS` to authenticate only access to ce
 ::
 
     AUTH_PROTECTED_AREAS = ['/admin']
+    
+If you wish, you can add `AUTH_EXCLUDED_AREAS` to remove authentication from sub-folders of your protected areas, e.g.
+::
+
+    AUTH_EXCLUDED_AREAS = ['/admin/public']
 
 Download
 ========
