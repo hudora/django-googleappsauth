@@ -34,6 +34,14 @@ class GoogleAuthMiddleware(object):
         if len(matches) == 0:
             return
         
+        # Don't force authentication for excluded areas - allow sub-folders without auth
+        excludes = getattr(settings, 'AUTH_EXCLUDED_AREAS', [])
+        if hasattr(excludes, 'split'):
+            excludes = excludes.split('+')
+        exclude_matches = [exclude for exclude in excludes if path.startswith(exclude)]
+        if len(exclude_matches) != 0:
+            return
+
         # Dont force authentication for the callback URL since it would
         # result in a loop
         callback_url = request.build_absolute_uri(reverse(googleappsauth.views.callback))
